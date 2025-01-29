@@ -16,13 +16,15 @@ const express = require('express');
 const app = express();
 
 const connectDB = require('./db/connect');
-const authenticateUser = require('./middleware/authentication');
+const authenticateUser = require('./middlewares/authentication');
+
 // routers
 const authRouter = require('./routes/auth');
-const jobsRouter = require('./routes/jobs');
+// const jobsRouter = require('./routes/jobs');
+
 // error handler
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
+const notFoundMiddleware = require('./middlewares/not-found');
+const errorHandlerMiddleware = require('./middlewares/error-handler');
 
 app.set('trust proxy', 1);
 app.use(
@@ -43,16 +45,16 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // routes
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', authenticateUser, jobsRouter);
+// app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3500;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI);
+    await connectDB(process.env.MONGO_URL);
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
     );
