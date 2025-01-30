@@ -5,13 +5,13 @@ const {
   createJob,
 //   deleteJob,
  getAllJobs,
-//   updateJob,
+ updateJob,
 getJob,
 //TODO 
 } = require('./../controllers/jobs');
 
 router.route('/').post(createJob).get(getAllJobs)
 
-router.route('/:id').get(getJob);
+router.route('/:id').get(getJob).patch(updateJob);
 
 module.exports = router;
