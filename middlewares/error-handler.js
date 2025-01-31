@@ -1,5 +1,6 @@
 // const { CustomAPIError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
+const { object } = require('joi');
 
 const errorHandlerMiddleware = (err, req, res, next) => {
    
@@ -17,6 +18,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   //dublicate error
   if (err.code && err.code === 11000) {
     customError.message = `Duplicate value enter for ${Object.keys(err.keyValue)} field, please choose another value`;
+    customError.statusCode = 400;
+  }
+
+  // Validation error
+  if (err.name === 'ValidationError') {
+    customError.message = Object.keys(err.errors.map((err) => err.message).join(','));
     customError.statusCode = 400;
   }
 
