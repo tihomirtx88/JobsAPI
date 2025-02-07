@@ -10,10 +10,14 @@ const rateLimiter = require('express-rate-limit');
 // static files
 const path = require("path");
 
+//File Upload 
+const fileUpload = require("express-fileupload");
+
 const express = require('express');
 const app = express();
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.json());
+app.use(fileUpload());
 
 const connectDB = require('./db/connect');
 const authenticateUser = require('./middlewares/authentication');
