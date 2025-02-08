@@ -4,8 +4,7 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
   const user = await User.create({ ...req.body });
-  console.log(user, "sadffdsafasdfsadfasdfsadf");
-  
+
   const token = user.createJWT();
   res
     .status(StatusCodes.CREATED)

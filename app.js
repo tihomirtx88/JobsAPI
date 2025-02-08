@@ -12,12 +12,14 @@ const path = require("path");
 
 //File Upload 
 const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({cloud_name: process.env.CLOUD_NAME, api_key: process.env.CLOUD_API_KEY, api_secret: process.env.CLOUD_API_SECRET});
 
 const express = require('express');
 const app = express();
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.json());
-app.use(fileUpload());
+app.use(fileUpload({useTempFiles: true}));
 
 const connectDB = require('./db/connect');
 const authenticateUser = require('./middlewares/authentication');
